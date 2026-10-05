@@ -1,0 +1,49 @@
+{{!
+    Dashboard template for Quiz Wizard.
+}}
+<div class="local-quizwizard-dashboard">
+    <div class="qw-dashboard-header">
+        <h2>{{#str}} dashboard, local_quizwizard {{/str}}</h2>
+        <a href="{{createurl}}" class="btn btn-primary qw-btn-large">
+            {{#str}} createquiz, local_quizwizard {{/str}}
+        </a>
+    </div>
+
+    {{^sessions}}
+    <div class="qw-empty-state">
+        <h3>{{#str}} emptyquiz, local_quizwizard {{/str}}</h3>
+        <p>{{#str}} emptyquiz_help, local_quizwizard {{/str}}</p>
+        <a href="{{createurl}}" class="btn btn-primary qw-btn-large">{{#str}} createquiz, local_quizwizard {{/str}}</a>
+    </div>
+    {{/sessions}}
+
+    {{#sessions}}
+    <div class="qw-table-wrapper">
+        <table class="qw-table">
+            <thead>
+                <tr>
+                    <th>{{#str}} title, local_quizwizard {{/str}}</th>
+                    <th>{{#str}} questioncount, local_quizwizard {{/str}}</th>
+                    <th>{{#str}} lastmodified, local_quizwizard {{/str}}</th>
+                    <th>{{#str}} status, local_quizwizard {{/str}}</th>
+                    <th>{{#str}} actions, local_quizwizard {{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#sessions}}
+                <tr>
+                    <td><a href="{{editurl}}">{{{title}}}</a></td>
+                    <td>{{questioncountstr}}</td>
+                    <td>{{lastmodified}}</td>
+                    <td><span class="qw-status qw-status-{{status}}">{{status}}</span></td>
+                    <td>
+                        <a href="{{editurl}}" class="btn btn-secondary btn-sm">{{#str}} editquiz, local_quizwizard {{/str}}</a>
+                        <a href="{{deleteurl}}" class="btn btn-danger btn-sm qw-delete-confirm" data-message="{{#str}} confirmdeletequiz, local_quizwizard {{/str}}">{{#str}} deletequestion, local_quizwizard {{/str}}</a>
+                    </td>
+                </tr>
+                {{/sessions}}
+            </tbody>
+        </table>
+    </div>
+    {{/sessions}}
+</div>

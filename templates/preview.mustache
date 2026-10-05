@@ -1,0 +1,65 @@
+{{!
+    Preview template for Quiz Wizard.
+}}
+<div class="local-quizwizard-preview">
+    <div class="qw-preview-header">
+        <h2>{{title}}</h2>
+        {{#timelimit}}
+        <div class="qw-timer" data-seconds="{{timelimit}}">
+            {{#str}} timer, local_quizwizard {{/str}}: <span id="qw-timer-display">--:--</span>
+        </div>
+        {{/timelimit}}
+    </div>
+
+    {{^hasquestions}}
+    <div class="qw-empty-state">
+        <p>{{#str}} noquestions, local_quizwizard {{/str}}</p>
+        <a href="{{editurl}}" class="btn btn-primary">{{#str}} addquestion, local_quizwizard {{/str}}</a>
+    </div>
+    {{/hasquestions}}
+
+    {{#hasquestions}}
+    <div class="qw-preview-progress">
+        {{#str}} questionnumber, local_quizwizard, {{current}} {{/str}} / {{total}}
+    </div>
+
+    <div class="qw-preview-question">
+        <h3>{{{question.questiontext}}}</h3>
+        <ul class="qw-preview-answers">
+            {{#question.answerlist}}
+            <li>
+                <label class="qw-preview-option">
+                    <input type="{{inputtype}}" name="qw_answer" disabled>
+                    <span>{{{answertext}}}</span>
+                </label>
+            </li>
+            {{/question.answerlist}}
+        </ul>
+        {{#question.hasexplanation}}
+        <div class="qw-preview-explanation"><strong>{{#str}} explanation, local_quizwizard {{/str}}:</strong> {{{question.explanationtext}}}</div>
+        {{/question.hasexplanation}}
+    </div>
+
+    <div class="qw-preview-nav">
+        {{#prevurl}}
+        <a href="{{prevurl}}" class="btn btn-secondary">{{#str}} previous, local_quizwizard {{/str}}</a>
+        {{/prevurl}}
+        {{#nexturl}}
+        <a href="{{nexturl}}" class="btn btn-primary">{{#str}} next, local_quizwizard {{/str}}</a>
+        {{/nexturl}}
+        {{^nexturl}}
+        <button type="button" class="btn btn-success" disabled>{{#str}} submit, local_quizwizard {{/str}}</button>
+        {{/nexturl}}
+    </div>
+
+    <div class="qw-preview-navigation" role="navigation" aria-label="{{#str}} navigation, local_quizwizard {{/str}}">
+        {{#navigation}}
+        <a href="{{url}}" class="qw-nav-item {{#active}}active{{/active}}">{{num}}</a>
+        {{/navigation}}
+    </div>
+    {{/hasquestions}}
+
+    <div class="qw-preview-actions">
+        <a href="{{editurl}}" class="btn btn-secondary">{{#str}} back, local_quizwizard {{/str}}</a>
+    </div>
+</div>

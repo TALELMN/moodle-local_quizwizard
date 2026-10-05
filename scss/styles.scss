@@ -1,0 +1,358 @@
+/*
+ * Quiz Wizard SCSS source.
+ * Compile to styles.css with Moodle Grunt pipeline.
+ */
+
+$qw-black: #000;
+$qw-white: #fff;
+$qw-yellow: #ffeb3b;
+$qw-green: #69f0ae;
+$qw-orange: #ffd180;
+$qw-blue: #2962ff;
+
+.local-quizwizard-dashboard {
+    .qw-dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .qw-empty-state {
+        text-align: center;
+        padding: 3rem 2rem;
+        border: 3px solid $qw-black;
+        background: $qw-white;
+        box-shadow: 6px 6px 0 $qw-black;
+    }
+    .qw-table-wrapper {
+        overflow-x: auto;
+    }
+    .qw-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 3px solid $qw-black;
+        th, td {
+            padding: 0.75rem 1rem;
+            border: 2px solid $qw-black;
+            text-align: left;
+        }
+        th {
+            background: $qw-yellow;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    }
+    .qw-status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border: 2px solid $qw-black;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        &-published { background: $qw-green; }
+        &-draft { background: $qw-orange; }
+    }
+}
+
+.local-quizwizard-wizard {
+    .qw-wizard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .qw-steps {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .qw-step {
+        flex: 1;
+        padding: 1rem;
+        border: 3px solid $qw-black;
+        background: $qw-white;
+        text-align: center;
+        font-weight: 700;
+        text-transform: uppercase;
+        opacity: 0.6;
+        &.active {
+            background: $qw-yellow;
+            opacity: 1;
+            box-shadow: 4px 4px 0 $qw-black;
+        }
+    }
+    .qw-form {
+        max-width: 800px;
+    }
+    .qw-form-group {
+        margin-bottom: 1.5rem;
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+    }
+    .qw-form-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        .qw-form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+    }
+    .form-control {
+        border: 2px solid $qw-black;
+        border-radius: 0;
+        padding: 0.75rem;
+        font-size: 1rem;
+        box-shadow: 3px 3px 0 $qw-black;
+        &:focus {
+            outline: 3px solid $qw-blue;
+            outline-offset: 2px;
+        }
+    }
+    .qw-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        input {
+            width: 1.5rem;
+            height: 1.5rem;
+            border: 2px solid $qw-black;
+        }
+    }
+    .qw-form-actions {
+        margin-top: 2rem;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    .qw-btn-large {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border: 3px solid $qw-black;
+        box-shadow: 4px 4px 0 $qw-black;
+        text-transform: uppercase;
+        &:hover {
+            box-shadow: 2px 2px 0 $qw-black;
+            transform: translate(2px, 2px);
+        }
+    }
+    .qw-builder-toolbar {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+    }
+    .qw-questions-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+    .qw-question-card {
+        background: $qw-white;
+        border: 3px solid $qw-black;
+        box-shadow: 5px 5px 0 $qw-black;
+        padding: 1.25rem;
+        cursor: move;
+        transition: transform 0.1s;
+        &.dragging { opacity: 0.5; }
+        &:focus {
+            outline: 3px solid $qw-blue;
+            outline-offset: 2px;
+        }
+    }
+    .qw-card-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+        border-bottom: 2px solid $qw-black;
+        padding-bottom: 0.5rem;
+    }
+    .qw-card-title {
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+    .qw-card-points {
+        background: $qw-yellow;
+        border: 2px solid $qw-black;
+        padding: 0.15rem 0.5rem;
+        font-weight: 700;
+    }
+    .qw-card-question {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+    }
+    .qw-card-answers {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem 0;
+        li {
+            padding: 0.35rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        .qw-correct {
+            font-weight: 700;
+            color: $qw-black;
+        }
+    }
+    .qw-bullet {
+        display: inline-block;
+        width: 1.25rem;
+        text-align: center;
+    }
+    .qw-card-footer {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    .qw-answer-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        .form-control { flex: 1; }
+    }
+    .qw-correct-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+    .qw-modal .modal-content {
+        border: 3px solid $qw-black;
+        border-radius: 0;
+        box-shadow: 8px 8px 0 $qw-black;
+    }
+    .qw-modal .modal-header {
+        border-bottom: 3px solid $qw-black;
+        background: $qw-yellow;
+    }
+    .qw-modal .modal-footer {
+        border-top: 3px solid $qw-black;
+    }
+    .qw-import-tabs,
+    .qw-import-panel {
+        margin-bottom: 1rem;
+    }
+    .qw-import-item,
+    .qw-ai-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid #ccc;
+    }
+    .qw-import-status {
+        font-weight: 700;
+    }
+}
+
+.local-quizwizard-preview {
+    .qw-preview-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 3px solid $qw-black;
+        padding-bottom: 1rem;
+    }
+    .qw-timer {
+        background: $qw-black;
+        color: $qw-white;
+        padding: 0.5rem 1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+    .qw-preview-progress {
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+    .qw-preview-question {
+        background: $qw-white;
+        border: 3px solid $qw-black;
+        box-shadow: 5px 5px 0 $qw-black;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .qw-preview-answers {
+        list-style: none;
+        padding: 0;
+        margin: 1rem 0;
+        li { margin-bottom: 0.75rem; }
+    }
+    .qw-preview-option {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        border: 2px solid $qw-black;
+        background: $qw-white;
+        cursor: not-allowed;
+        input {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+    .qw-preview-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+    .qw-preview-navigation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .qw-nav-item {
+        display: inline-block;
+        width: 2.25rem;
+        height: 2.25rem;
+        line-height: 2.25rem;
+        text-align: center;
+        border: 2px solid $qw-black;
+        background: $qw-white;
+        font-weight: 700;
+        text-decoration: none;
+        color: $qw-black;
+        &.active { background: $qw-yellow; }
+    }
+}
+
+.qw-empty-state {
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border: 3px dashed $qw-black;
+    background: #fafafa;
+    margin-bottom: 1.5rem;
+}
+
+.qw-help-text {
+    color: #444;
+    margin-bottom: 0.75rem;
+}
+
+.qw-errors ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+@media (max-width: 768px) {
+    .local-quizwizard-wizard {
+        .qw-form-row { flex-direction: column; }
+        .qw-form-row .qw-form-group { min-width: 100%; }
+        .qw-builder-toolbar { flex-direction: column; }
+    }
+    .local-quizwizard-dashboard .qw-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}

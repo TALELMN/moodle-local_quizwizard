@@ -1,0 +1,149 @@
+{{!
+    Wizard template for Quiz Wizard.
+}}
+<div class="local-quizwizard-wizard" data-sessionid="{{session.id}}" data-ajaxurl="{{ajaxurl}}">
+    <div class="qw-wizard-header">
+        <h2>{{#str}} editquiz, local_quizwizard {{/str}}</h2>
+        <a href="{{dashboardurl}}" class="btn btn-secondary">{{#str}} backtodashboard, local_quizwizard {{/str}}</a>
+    </div>
+
+    <nav class="qw-steps" aria-label="{{#str}} step1, local_quizwizard {{/str}}">
+        <div class="qw-step {{#step1active}}active{{/step1active}}">1. {{#str}} step1, local_quizwizard {{/str}}</div>
+        <div class="qw-step {{#step2active}}active{{/step2active}}">2. {{#str}} step2, local_quizwizard {{/str}}</div>
+        <div class="qw-step {{#step3active}}active{{/step3active}}">3. {{#str}} step3, local_quizwizard {{/str}}</div>
+    </nav>
+
+    {{#errors}}
+    <div class="alert alert-danger qw-errors" role="alert">
+        <ul>
+            {{#.}}
+            <li>{{.}}</li>
+            {{/.}}
+        </ul>
+    </div>
+    {{/errors}}
+
+    {{! Step 1: Quiz information }}
+    {{#step1active}}
+    <form method="post" action="{{config.wwwroot}}/local/quizwizard/wizard.php?id={{session.id}}&step=1" class="qw-form">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="savestep1" value="1">
+
+        <div class="qw-form-group">
+            <label for="qw-title">{{#str}} title, local_quizwizard {{/str}}</label>
+            <input type="text" id="qw-title" name="title" class="form-control" value="{{{session.title}}}" required>
+        </div>
+
+        <div class="qw-form-group">
+            <label for="qw-intro">{{#str}} description, local_quizwizard {{/str}}</label>
+            <textarea id="qw-intro" name="intro" class="form-control" rows="4">{{{session.intro}}}</textarea>
+        </div>
+
+        <div class="qw-form-row">
+            <div class="qw-form-group">
+                <label for="qw-section">{{#str}} section, local_quizwizard {{/str}}</label>
+                <select id="qw-section" name="section" class="form-control">
+                    {{#sections}}
+                    <option value="{{num}}" {{selected}}>{{name}}</option>
+                    {{/sections}}
+                </select>
+            </div>
+
+            <div class="qw-form-group">
+                <label for="qw-timelimit">{{#str}} timelimit, local_quizwizard {{/str}}</label>
+                <input type="number" id="qw-timelimit" name="timelimit" class="form-control" value="{{session.timelimit_minutes}}" min="0">
+            </div>
+
+            <div class="qw-form-group">
+                <label for="qw-attempts">{{#str}} attempts, local_quizwizard {{/str}}</label>
+                <input type="number" id="qw-attempts" name="attempts" class="form-control" value="{{session.attempts}}" min="0" placeholder="{{#str}} unlimitedattempts, local_quizwizard {{/str}}">
+            </div>
+        </div>
+
+        <div class="qw-form-row">
+            <div class="qw-form-group">
+                <label for="qw-grademethod">{{#str}} grademethod, local_quizwizard {{/str}}</label>
+                <select id="qw-grademethod" name="grademethod" class="form-control">
+                    {{#grademethods}}
+                    <option value="{{value}}" {{selected}}>{{name}}</option>
+                    {{/grademethods}}
+                </select>
+            </div>
+        </div>
+
+        <div class="qw-form-group qw-checkbox">
+            <input type="checkbox" id="qw-review" name="reviewcorrectanswers" value="1" {{session.reviewcorrectanswers_checked}}>
+            <label for="qw-review">{{#str}} reviewcorrectanswers, local_quizwizard {{/str}}</label>
+        </div>
+
+        <div class="qw-form-actions">
+            <button type="submit" class="btn btn-primary qw-btn-large">{{#str}} next, local_quizwizard {{/str}}</button>
+        </div>
+    </form>
+    {{/step1active}}
+
+    {{! Step 2: Build questions }}
+    {{#step2active}}
+    <div class="qw-builder">
+        <div class="qw-builder-toolbar">
+            <button type="button" class="btn btn-primary qw-btn-large" data-action="open-question-modal">{{#str}} addquestion, local_quizwizard {{/str}}</button>
+            <button type="button" class="btn btn-secondary" data-action="open-import-modal">{{#str}} importquestions, local_quizwizard {{/str}}</button>
+            {{#aienabled}}
+            <button type="button" class="btn btn-secondary" data-action="open-ai-modal">{{#str}} generatequestions, local_quizwizard {{/str}}</button>
+            {{/aienabled}}
+        </div>
+
+        <div class="qw-questions-list" id="qw-questions-list">
+            {{^hasquestions}}
+            <div class="qw-empty-state">
+                <h3>{{#str}} emptyquiz, local_quizwizard {{/str}}</h3>
+                <p>{{#str}} emptyquiz_help, local_quizwizard {{/str}}</p>
+                <button type="button" class="btn btn-primary qw-btn-large" data-action="open-question-modal">{{#str}} addquestion, local_quizwizard {{/str}}</button>
+            </div>
+            {{/hasquestions}}
+
+            {{#hasquestions}}
+            {{#questions}}
+            <div class="qw-question-card" data-questionid="{{id}}" tabindex="0" role="button" aria-label="{{#str}} question, local_quizwizard {{/str}} {{num}}">
+                <div class="qw-card-header">
+                    <span class="qw-card-title">{{#str}} question, local_quizwizard {{/str}} {{num}}</span>
+                    <span class="qw-card-points">{{#str}} points, local_quizwizard {{/str}}: {{points}}</span>
+                </div>
+                <div class="qw-card-body">
+                    <div class="qw-card-question">{{{questiontext}}}</div>
+                    <ul class="qw-card-answers">
+                        {{#answerlist}}
+                        <li class="{{#iscorrect}}qw-correct{{/iscorrect}}">
+                            <span class="qw-bullet">{{#iscorrect}}&#10003;{{/iscorrect}}{{^iscorrect}}&#9675;{{/iscorrect}}</span>
+                            {{{answertext}}}
+                        </li>
+                        {{/answerlist}}
+                    </ul>
+                    {{#hasexplanation}}
+                    <div class="qw-card-explanation"><strong>{{#str}} explanation, local_quizwizard {{/str}}:</strong> {{{explanationtext}}}</div>
+                    {{/hasexplanation}}
+                </div>
+                <div class="qw-card-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-action="edit-question" data-questionid="{{id}}">{{#str}} editquestion, local_quizwizard {{/str}}</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-action="duplicate-question" data-questionid="{{id}}">{{#str}} duplicatequestion, local_quizwizard {{/str}}</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-action="delete-question" data-questionid="{{id}}">{{#str}} deletequestion, local_quizwizard {{/str}}</button>
+                </div>
+            </div>
+            {{/questions}}
+            {{/hasquestions}}
+        </div>
+
+        <div class="qw-form-actions">
+            <a href="{{config.wwwroot}}/local/quizwizard/wizard.php?id={{session.id}}&step=1" class="btn btn-secondary">{{#str}} previous, local_quizwizard {{/str}}</a>
+            <a href="{{previewurl}}" class="btn btn-secondary">{{#str}} previewquiz, local_quizwizard {{/str}}</a>
+            <a href="{{publishurl}}" class="btn btn-success qw-btn-large" id="qw-publish-btn">{{#str}} publishquiz, local_quizwizard {{/str}}</a>
+        </div>
+    </div>
+
+    {{> local_quizwizard/question_modal }}
+    {{> local_quizwizard/import_modal }}
+    {{#aienabled}}
+    {{> local_quizwizard/ai_modal }}
+    {{/aienabled}}
+    {{/step2active}}
+</div>

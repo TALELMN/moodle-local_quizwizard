@@ -1,0 +1,53 @@
+{{!
+    AI generation modal.
+}}
+<div class="modal fade" id="qw-ai-modal" tabindex="-1" role="dialog" aria-labelledby="qw-ai-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content qw-modal">
+            <div class="modal-header">
+                <h4 class="modal-title" id="qw-ai-modal-label">{{#str}} generatequestions, local_quizwizard {{/str}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{{#str}} close, local_quizwizard {{/str}}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="qw-ai-form">
+                    <div class="qw-form-group">
+                        <label for="qw-ai-topic">{{#str}} topic, local_quizwizard {{/str}}</label>
+                        <input type="text" id="qw-ai-topic" name="topic" class="form-control" required>
+                    </div>
+                    <div class="qw-form-row">
+                        <div class="qw-form-group">
+                            <label for="qw-ai-count">{{#str}} numberofquestions, local_quizwizard {{/str}}</label>
+                            <input type="number" id="qw-ai-count" name="count" class="form-control" value="5" min="1" max="50">
+                        </div>
+                        <div class="qw-form-group">
+                            <label for="qw-ai-difficulty">{{#str}} difficulty, local_quizwizard {{/str}}</label>
+                            <select id="qw-ai-difficulty" name="difficulty" class="form-control">
+                                <option value="easy">{{#str}} difficulty_easy, local_quizwizard {{/str}}</option>
+                                <option value="medium" selected>{{#str}} difficulty_medium, local_quizwizard {{/str}}</option>
+                                <option value="hard">{{#str}} difficulty_hard, local_quizwizard {{/str}}</option>
+                            </select>
+                        </div>
+                        <div class="qw-form-group">
+                            <label for="qw-ai-language">{{#str}} language, local_quizwizard {{/str}}</label>
+                            <input type="text" id="qw-ai-language" name="language" class="form-control" value="English">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary qw-btn-large" id="qw-generate-btn">{{#str}} generatequestions, local_quizwizard {{/str}}</button>
+                </form>
+
+                <div id="qw-ai-preview" style="display:none;">
+                    <h5>{{#str}} aigenerated, local_quizwizard {{/str}}</h5>
+                    <div id="qw-ai-preview-list"></div>
+                </div>
+
+                <div id="qw-ai-error" class="alert alert-danger" role="alert" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{#str}} cancel, local_quizwizard {{/str}}</button>
+                <button type="button" class="btn btn-primary qw-btn-large" id="qw-add-selected-btn" style="display:none;">{{#str}} addselected, local_quizwizard {{/str}}</button>
+            </div>
+        </div>
+    </div>
+</div>
